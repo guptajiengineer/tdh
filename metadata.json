@@ -1,0 +1,6 @@
+{
+  "name": "The Devil Hunters",
+  "description": "Full-stack cybersecurity CTF team platform, war room, and writeups engine.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
