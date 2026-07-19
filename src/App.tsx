@@ -7,7 +7,6 @@ import {
 } from "lucide-react";
 
 import BootSequence from "./components/BootSequence";
-import ThreatIntelFeed from "./components/ThreatIntelFeed";
 import WriteupReader from "./components/WriteupReader";
 import AdminPanel from "./components/AdminPanel";
 import JoinForm from "./components/JoinForm";
@@ -227,18 +226,6 @@ export default function App() {
                       </motion.div>
                     </div>
                   </motion.section>
-
-                  {/* Operational Notice and Live Interactive War Room Log Feed */}
-                  <section className="space-y-4">
-                    <div className="flex items-center justify-between font-mono text-xs text-[var(--text-secondary)] border-b border-[var(--border-default)] pb-2 uppercase tracking-wider">
-                      <span>TEAM ACTIVITY // LIVE_FEED</span>
-                      <span className="text-[var(--red-core)] font-semibold">● TEAM ONLINE</span>
-                    </div>
-                    
-                    <ThreatIntelFeed />
-                  </section>
-
-                  <SectionDivider />
 
                   {/* 6 Specialization Domain Cards section */}
                   <motion.section 
