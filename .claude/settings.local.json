@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/User/**)",
+      "Read(//c/Users/User/Desktop/**)",
+      "Read(//d/d/code project/tdh/**)",
+      "Bash(npx tsc *)",
+      "Bash(npm install *)",
+      "Bash(npm run *)"
+    ]
+  }
+}

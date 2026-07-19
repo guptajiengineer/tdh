@@ -15,62 +15,62 @@ const INITIAL_LOGS: FeedLog[] = [
     id: "l-1",
     timestamp: "23:25:12",
     type: "INFO",
-    source: "war_room_main",
-    message: "Initializing live surveillance on DEF CON Quals target hosts.",
-    category: "SYSTEM"
+    source: "team_hangout",
+    message: "Weekend practice session started — everyone's hopping on the voice call.",
+    category: "TEAM"
   },
   {
     id: "l-2",
     timestamp: "23:25:40",
     type: "SUCCESS",
-    source: "Alexander 'Daemon' Cross",
-    message: "Recovered first-blood subkey from White-Box AES cryptographic wrapper.",
+    source: "crypto_corner",
+    message: "First solve of the night! That XOR challenge finally cracked after 2 hours.",
     category: "CRYPTO"
   },
   {
     id: "l-3",
     timestamp: "23:26:01",
     type: "ALERT",
-    source: "IDS_NODE_WEST",
-    message: "Port probe sweep detected on team scoring submission node.",
-    category: "SENSORS"
+    source: "web_squad",
+    message: "Stuck on an SQLi filter bypass — anyone free to rubber-duck this with us?",
+    category: "WEB"
   },
   {
     id: "l-4",
     timestamp: "23:26:45",
     type: "ATTACK",
-    source: "Kaito 'Phreak' Tanaka",
-    message: "Triggered JIT corruption heap primitive on remote host 'v8-jail.target.ctf'.",
+    source: "pwn_learners",
+    message: "Working through our first buffer overflow on picoCTF. Slow but we're getting it.",
     category: "PWN"
   },
   {
     id: "l-5",
     timestamp: "23:27:01",
     type: "SUCCESS",
-    source: "Elena 'Valkyrie' Petrova",
-    message: "Extracted high-resolution geotags from host metadata cache. Latitude identified.",
+    source: "osint_crew",
+    message: "Geolocated the challenge photo from a street sign reflection. Feeling like detectives.",
     category: "OSINT"
   }
 ];
 
-const ENEMY_TEAMS = ["Perfect Blue", "PPP", "DiceGang", "More Smoked Leek", "WreckTheLine"];
+const TOP_TEAMS = ["Perfect Blue", "PPP", "DiceGang", "More Smoked Leek", "WreckTheLine"];
 const CHALLENGE_NAMES = [
-  "heap-master-9000",
-  "pbox-aes-oracle",
-  "dns-hole-routing",
-  "sandbox_breakout_v2",
-  "rsa-lattice-breaker",
-  "firmware-extractor-3",
-  "trace-carver"
+  "baby-rev-101",
+  "cookie-monster",
+  "caesar-salad",
+  "format-string-fun",
+  "packet-detective",
+  "hidden-in-plain-sight",
+  "stack-smash-starter"
 ];
 
 export default function ThreatIntelFeed() {
   const [logs, setLogs] = useState<FeedLog[]>(INITIAL_LOGS);
-  const [activeTab, setActiveTab] = useState<"ALL" | "ATTACKS" | "SYSTEM" | "SOLVES">("ALL");
-  const [threatLevel, setThreatLevel] = useState(72);
+  const [activeTab, setActiveTab] = useState<"ALL" | "GRIND" | "TEAM" | "SOLVES">("ALL");
+  const [hypeLevel, setHypeLevel] = useState(72);
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
-  // Generate dynamic logs periodically to simulate real CTF warfare
+  // Generate dynamic logs periodically to keep the feed feeling alive
   useEffect(() => {
     const timer = setInterval(() => {
       const typeRand = Math.random();
@@ -79,36 +79,36 @@ export default function ThreatIntelFeed() {
 
       if (typeRand < 0.25) {
         // Solving challenge
-        const member = ["Alexander 'Daemon' Cross", "Elena 'Valkyrie' Petrova", "Kaito 'Phreak' Tanaka"][Math.floor(Math.random() * 3)];
+        const squad = ["web_squad", "crypto_corner", "pwn_learners", "osint_crew"][Math.floor(Math.random() * 4)];
         const challenge = CHALLENGE_NAMES[Math.floor(Math.random() * CHALLENGE_NAMES.length)];
         newLog = {
           id: `l-${Date.now()}`,
           timestamp: timeStr,
           type: "SUCCESS",
-          source: member,
-          message: `SUCCESSFULLY SLAYED: Solved "${challenge}" for +350 pts.`,
+          source: squad,
+          message: `Solved "${challenge}"! Writeup coming soon so everyone can learn from it.`,
           category: "SOLVE"
         };
       } else if (typeRand < 0.5) {
-        // Hostile activity
-        const enemy = ENEMY_TEAMS[Math.floor(Math.random() * ENEMY_TEAMS.length)];
+        // Watching the pros
+        const team = TOP_TEAMS[Math.floor(Math.random() * TOP_TEAMS.length)];
         newLog = {
           id: `l-${Date.now()}`,
           timestamp: timeStr,
           type: "ATTACK",
-          source: `OPP_WATCH [${enemy}]`,
-          message: `Hostile squad registered points on general board category.`,
-          category: "ALERT"
+          source: "scoreboard_watch",
+          message: `${team} just climbed the board. Studying their old writeups — one day that's us.`,
+          category: "GRIND"
         };
       } else if (typeRand < 0.75) {
-        // Intrusion warning
+        // Someone stuck / asking for help
         newLog = {
           id: `l-${Date.now()}`,
           timestamp: timeStr,
           type: "ALERT",
-          source: "IDS_NODE_GATEWAY",
-          message: `Excessive connection pooling flagged. Running counter-bruteforce protocols.`,
-          category: "SYSTEM"
+          source: "help_channel",
+          message: `Someone's stuck on a reversing challenge — hopping in to pair on it. That's how we learn.`,
+          category: "TEAM"
         };
       } else {
         // Regular info
@@ -116,9 +116,9 @@ export default function ThreatIntelFeed() {
           id: `l-${Date.now()}`,
           timestamp: timeStr,
           type: "INFO",
-          source: "system_kernel",
-          message: `Refreshing sandbox escape tunnels and recycling SSH proxy lists.`,
-          category: "SYSTEM"
+          source: "team_hangout",
+          message: `New practice challenges queued up from picoCTF and HackTheBox. Come grind with us.`,
+          category: "TEAM"
         };
       }
 
@@ -129,8 +129,8 @@ export default function ThreatIntelFeed() {
         return next;
       });
 
-      // Fluctuate threat level slightly
-      setThreatLevel((prev) => {
+      // Fluctuate hype level slightly
+      setHypeLevel((prev) => {
         const diff = Math.floor(Math.random() * 5) - 2;
         return Math.max(30, Math.min(99, prev + diff));
       });
@@ -147,8 +147,8 @@ export default function ThreatIntelFeed() {
 
   const filteredLogs = logs.filter((log) => {
     if (activeTab === "ALL") return true;
-    if (activeTab === "ATTACKS") return log.type === "ATTACK" || log.type === "ALERT";
-    if (activeTab === "SYSTEM") return log.category === "SYSTEM";
+    if (activeTab === "GRIND") return log.type === "ATTACK" || log.type === "ALERT";
+    if (activeTab === "TEAM") return log.category === "TEAM";
     if (activeTab === "SOLVES") return log.type === "SUCCESS";
     return true;
   });
@@ -166,10 +166,10 @@ export default function ThreatIntelFeed() {
           </div>
           <div className="text-left">
             <h3 className="font-heading font-semibold text-lg text-[var(--text-primary)] uppercase tracking-wider">
-              WAR ROOM THREAT COUNTER
+              TEAM ACTIVITY LOG
             </h3>
             <p className="font-mono text-[10px] text-[var(--text-secondary)] uppercase">
-              ACTIVE SURVEILLANCE & STREAM_INTEL
+              WHAT WE'RE HACKING ON RIGHT NOW
             </p>
           </div>
         </div>
@@ -177,14 +177,14 @@ export default function ThreatIntelFeed() {
         {/* Live status indicators */}
         <div className="flex items-center gap-4 font-mono text-xs">
           <div className="flex flex-col text-right">
-            <span className="text-[10px] text-[var(--text-dim)] uppercase">THREAT INDEX</span>
-            <span className={`font-bold tracking-widest ${threatLevel > 80 ? "text-[var(--text-red)]" : "text-[var(--text-amber)]"}`}>
-              {threatLevel}% DANGER
+            <span className="text-[10px] text-[var(--text-dim)] uppercase">HYPE LEVEL</span>
+            <span className={`font-bold tracking-widest ${hypeLevel > 80 ? "text-[var(--text-red)]" : "text-[var(--text-amber)]"}`}>
+              {hypeLevel}% LOCKED_IN
             </span>
           </div>
           <div className="h-8 w-px bg-[var(--border-default)]" />
           <div className="flex flex-col text-right">
-            <span className="text-[10px] text-[var(--text-dim)] uppercase">GATEWAY</span>
+            <span className="text-[10px] text-[var(--text-dim)] uppercase">SQUAD</span>
             <span className="text-[var(--text-green)] flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--text-green)]" />
               ONLINE
@@ -195,7 +195,7 @@ export default function ThreatIntelFeed() {
 
       {/* Tabs */}
       <div className="flex border-b border-[var(--border-default)] mb-3 text-xs font-mono select-none overflow-x-auto gap-1">
-        {(["ALL", "ATTACKS", "SYSTEM", "SOLVES"] as const).map((tab) => (
+        {(["ALL", "GRIND", "TEAM", "SOLVES"] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -218,7 +218,7 @@ export default function ThreatIntelFeed() {
         {filteredLogs.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center text-[var(--text-dim)] italic gap-2 py-20">
             <ShieldAlert className="w-8 h-8 opacity-40 text-[var(--text-dim)]" />
-            <span>NO FLAGGED LOGS IN FILTER STATUS</span>
+            <span>NOTHING HERE YET — TRY ANOTHER TAB</span>
           </div>
         ) : (
           filteredLogs.map((log) => {
@@ -228,7 +228,7 @@ export default function ThreatIntelFeed() {
 
             switch (log.type) {
               case "INFO":
-                typeBadge = "SYSTEM";
+                typeBadge = "TEAM";
                 badgeClass += "";
                 textClass = "";
                 break;
@@ -238,12 +238,12 @@ export default function ThreatIntelFeed() {
                 textClass = "highlight";
                 break;
               case "ALERT":
-                typeBadge = "WARN";
+                typeBadge = "HELP";
                 badgeClass += "attack";
                 textClass = "";
                 break;
               case "ATTACK":
-                typeBadge = "DEPLOY";
+                typeBadge = "GRIND";
                 badgeClass += "attack";
                 textClass = "text-red-500";
                 break;
@@ -267,13 +267,13 @@ export default function ThreatIntelFeed() {
       <div className="mt-3 pt-3 border-t border-[var(--border-default)] flex flex-col sm:flex-row items-center justify-between text-[10px] font-mono text-[var(--text-dim)]">
         <div className="flex items-center gap-3">
           <span className="flex items-center gap-1">
-            <Cpu className="w-3.5 h-3.5" /> HOST_RESOURCES: OK
+            <Cpu className="w-3.5 h-3.5" /> BRAIN_CELLS: FIRING
           </span>
           <span className="hidden sm:inline">|</span>
-          <span className="hidden sm:inline">BUFFER_USAGE: 14%</span>
+          <span className="hidden sm:inline">SNACK_SUPPLY: 14%</span>
         </div>
         <div className="text-[var(--text-red)] uppercase tracking-widest font-semibold mt-2 sm:mt-0">
-          REBOOT_MODE: COUNTER_MEASURE_ARMED 
+          MODE: ALWAYS_LEARNING // ALWAYS_HUNGRY
         </div>
       </div>
     </div>

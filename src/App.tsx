@@ -231,8 +231,8 @@ export default function App() {
                   {/* Operational Notice and Live Interactive War Room Log Feed */}
                   <section className="space-y-4">
                     <div className="flex items-center justify-between font-mono text-xs text-[var(--text-secondary)] border-b border-[var(--border-default)] pb-2 uppercase tracking-wider">
-                      <span>TACTICAL INTEL STREAM // LIVE_FEED</span>
-                      <span className="text-[var(--red-core)] font-semibold">● ACTIVE_WAR_ROOM</span>
+                      <span>TEAM ACTIVITY // LIVE_FEED</span>
+                      <span className="text-[var(--red-core)] font-semibold">● TEAM ONLINE</span>
                     </div>
                     
                     <ThreatIntelFeed />
@@ -250,21 +250,21 @@ export default function App() {
                   >
                     <div className="text-left">
                       <h2 className="text-section-title text-[var(--text-primary)]">
-                        SURVEILLANCE OPERATIONS DOMAINS
+                        WHAT WE PLAY
                       </h2>
                       <p className="text-label mt-1">
-                        Our specialized cells deployed across cybersecurity battlefields
+                        The CTF categories we're learning together — new to one of these? Perfect, so are we.
                       </p>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                       {[
-                        { title: "Web Exploitation", desc: "Forging requests, racing state pools, bypassing filters, and remote code execution payloads.", tag: "Web" },
-                        { title: "Reverse Engineering", desc: "Disassembling obfuscated assembly blocks, patching binaries, and analyzing custom JIT runtimes.", tag: "Reverse" },
-                        { title: "OSINT Intelligence", desc: "Geographic geolocation, deep metadata carving, hostile signal traces, and open source reconnaissance.", tag: "OSINT" },
-                        { title: "Digital Forensics", desc: "Memory dumps analysis, capturing system states, recovering deleted storage blocks, and packet traces.", tag: "Forensics" },
-                        { title: "Advanced Cryptography", desc: "Algebraic side-channel correlations, cracking customized AES whiteboxes, and quantum-safe algorithms.", tag: "Crypto" },
-                        { title: "PWN & Core Exploitation", desc: "Heap grooming, browser sandbox bypasses, kernel privilege escalations, and virtual architecture escapes.", tag: "PWN" }
+                        { title: "Web Exploitation", desc: "Breaking web apps with SQL injection, XSS, and sneaky request tricks. The friendliest place to start your CTF journey.", tag: "Web" },
+                        { title: "Reverse Engineering", desc: "Cracking open programs to figure out how they work. Puzzle-solving for people who like taking things apart.", tag: "Reverse" },
+                        { title: "OSINT", desc: "Internet detective work — finding hidden info from photos, usernames, and public sources. No coding needed to start.", tag: "OSINT" },
+                        { title: "Digital Forensics", desc: "Digging through memory dumps, packet captures, and deleted files to hunt down the flag.", tag: "Forensics" },
+                        { title: "Cryptography", desc: "Making and breaking ciphers. Math-flavored puzzles, from classic Caesar shifts all the way up to RSA.", tag: "Crypto" },
+                        { title: "Binary Exploitation (PWN)", desc: "The deep end of the pool — buffer overflows and memory tricks. We're learning to swim here too, join us.", tag: "PWN" }
                       ].map((cell, idx) => {
                         const count = writeups.filter((w) => w.category.toLowerCase() === cell.tag.toLowerCase()).length;
                         return (
@@ -286,7 +286,7 @@ export default function App() {
                             <h3 className="domain-title">{cell.title}</h3>
                             <p className="domain-desc">{cell.desc}</p>
                             <div className="domain-count">
-                              RECORDS_LOGGED: <span>{count}</span>
+                              WRITEUPS: <span>{count}</span>
                             </div>
                           </motion.div>
                         );
